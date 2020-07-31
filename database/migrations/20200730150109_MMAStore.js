@@ -18,6 +18,10 @@ exports.up = function(knex, Promise) {
             tbl.string('gender', 6)
             
             tbl.string('description', 500)
+            .notNullable()
+
+            tbl.string('brand', 255)
+            .notNullable()
         })
         /* end of product table */
 
@@ -33,6 +37,10 @@ exports.up = function(knex, Promise) {
             .notNullable()
             .onUpdate('CASCADE')
             .onDelete('CASCADE')
+
+          tbl.string('img_source', 500)
+            .notNullable()
+            .unique()
        })
     
   )
