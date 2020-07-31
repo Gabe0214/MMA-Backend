@@ -4,6 +4,7 @@ const cors = require('cors')
 
 // import routes 
 
+const productsRoute = require('../productsRoute/productRouter')
 
 const server = express();
 
@@ -15,5 +16,6 @@ server.get('/', (req, res) => {
     res.status(200).json({message: "MMA Store Data RUnning"})
 })
 
+server.use('/products', productsRoute)
 
 module.exports = server
