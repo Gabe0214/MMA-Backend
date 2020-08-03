@@ -7,8 +7,13 @@ const router = express.Router()
 
 router.get('/', (req, res) => {
     products.getAllProducts()
-    .then(items =>{
-      res.status(200).json(items)
+    .then(items => { return items})
+    .then(items=> {
+        let allItems = [];
+        items.map(item => {
+           allItems.push({product_id: item.product_id, product_name: item.name, images: [{image_one: item.img_source_1}, {image_two: item.image_source_2}, {image_three: item.image_source_3}]})
+        })
+        res.status(200).json(allItems)
     })
     .catch(err => {
         console.log(err)
