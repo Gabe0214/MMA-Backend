@@ -17,7 +17,7 @@ exports.up = function(knex, Promise) {
 
             tbl.string('gender', 6)
             
-            tbl.string('description', 500)
+            tbl.string('description', 700)
             .notNullable()
 
             tbl.string('brand', 255)
@@ -38,9 +38,15 @@ exports.up = function(knex, Promise) {
             .onUpdate('CASCADE')
             .onDelete('CASCADE')
 
-          tbl.string('img_source', 500)
+          tbl.string('img_source_1', 500)
             .notNullable()
             .unique()
+
+          tbl.string('image_source_2', 500)
+          .unique()
+
+          tbl.string('image_source_3',500)
+          .unique()
        })
     
   )

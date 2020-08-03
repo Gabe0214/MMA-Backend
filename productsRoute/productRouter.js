@@ -1,6 +1,6 @@
 const express = require('express')
 const products = require('./productsModel')
-const { on } = require('../database/dbConfing')
+
 
 const router = express.Router()
 
@@ -8,15 +8,7 @@ const router = express.Router()
 router.get('/', (req, res) => {
     products.getAllProducts()
     .then(items =>{
-        
-        for(item of items){
-            const { product_id } = item
-            console.log(product_id)
-          products.getProductImages(product_id)
-          .then( images=> {
-              res.status(200).json([...items])
-          })
-        }
+      res.status(200).json(items)
     })
     .catch(err => {
         console.log(err)
