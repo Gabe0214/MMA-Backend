@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
     .then(items=> {
         let allItems = [];
         items.map(item => {
-           allItems.push({product_id: item.product_id, product_name: item.name, images: [{image_one: item.img_source_1}, {image_two: item.image_source_2}, {image_three: item.image_source_3}]})
+           allItems.push({product_id: item.product_id, product_name: item.name, price: item.price, type: item.type , gender: item.gender, brand: item.brand, desc: item.description, images: [{image_one: item.img_source_1}, {image_two: item.image_source_2}, {image_three: item.image_source_3}]})
         })
         res.status(200).json(allItems)
     })
