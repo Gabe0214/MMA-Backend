@@ -2,7 +2,11 @@ const db = require('../database/dbConfing')
 
 module.exports = {
     getAllProducts,
-    getProductByID
+    getProductByID,
+    deleteProduct,
+    upDateProduct,
+    upDateProductImages,
+    insertProduct
 }
 
 
@@ -23,3 +27,27 @@ function getProductByID(id){
     .first()
 }
 
+function deleteProduct(id){
+    return db('products as p')
+    .delete().where('p.product_id', id)
+}
+
+function upDateProduct(id, changes){
+    return db('products')
+   .update(changes)
+   .where('products.product_id', id)
+   .then(id => getProductByID(id)) 
+}
+
+function upDateProductImages(id, changes){
+    return db('product_images')
+    .update(changes)
+    .where('product_images.product_id', id)
+    .then(id => getProductByID(id))
+}
+
+function insertProduct(data){
+    return db('products')
+    .insert(data, "products.product_id")
+    .then(([id]) => getProductByID(id))
+}
