@@ -25,7 +25,7 @@ router.get('/:id', async (req, res) => {
     const productId = req.params.id;
     
     try {
-        let product = await products.getProductByID(productId)
+        let product = await products.getProductAndImagesByID(productId)
         if(product){
             const { product_id, name, brand, type, gender, price, description, img_source_1, image_source_2, image_source_3 } = product;
             res.status(200).json({product_id, name, brand, type, gender, price, description, images:[{img_source_1}, {image_source_2}, {image_source_3}]}) 
@@ -112,5 +112,22 @@ router.post('/', async (req, res) => {
         res.status(500).json({message: "error something went wrong in the server"})
     }
 })
+
+// post product images
+
+router.post('/product-image', async (req, res) => {
+
+    try {
+        const insertedData = await products.insertProductImage(req.body)
+        res.status(200).json(insertedData)
+    }
+
+    catch (err) {
+      console.log(err)
+      res.status(500).json({message: "something went wrong in server"})
+    }
+})
+
+
 
 module.exports = router;
