@@ -28,7 +28,7 @@ router.get('/:id', async (req, res) => {
         let product = await products.getProductAndImagesByID(productId)
         if(product){
             const { product_id, name, brand, type, gender, price, description, img_source_1, image_source_2, image_source_3 } = product;
-            res.status(200).json({product_id, name, brand, type, gender, price, description, images:[{img_source_1}, {image_source_2}, {image_source_3}]}) 
+            res.status(200).json({product_id, name, brand, type, gender, price, description, images:[{img:img_source_1}, {img: image_source_2}, {img: image_source_3}]}) 
         }
         else{ res.status(404).json({message: `Product with the given ID: ${productId} does not exist :(.`})}
         
