@@ -1,7 +1,6 @@
 const express = require('express')
-const { response } = require('../api/server')
 const products = require('./productsModel')
-const { upDateProduct } = require('./productsModel')
+
 
 
 const router = express.Router()
@@ -11,24 +10,20 @@ router.get('/', async (req, res) => {
  
     try {
         const allProducts = await products.getAllProducts()
-        const type = req.query
         let modifiedProducts = []
         allProducts.map(product => {return modifiedProducts.push({product_id: product.product_id, product_name: product.name, price: product.price, type: product.type , gender: product.gender, brand: product.brand, desc: product.description, images: [{image_one: product.img_source_1}, {image_two: product.image_source_2}, {image_three: product.image_source_3}]})})
+        const qry = req.query
+
         
+   
 
-        console.log(req.query)
 
-        // console.log(Object.keys(type)[0])
-
-        if(type !== null) {
-            let allValues = []
-            modifiedProducts.map((product) => {
-            if(product[Object.keys(type)[0]] == type.type){
-                 allValues.push(product)
-             }
+        if(Object.keys(qry).length > 0) {
+            console.log('hello')
+            const filteredProducts =  await products.filterProductsByQueryParams(qry)
            
-          })
-          res.status(200).json(allValues)
+          
+          res.status(200).json(filteredProducts)
         }
           else {res.status(200).json(modifiedProducts)}
     }

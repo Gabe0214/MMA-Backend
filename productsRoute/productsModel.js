@@ -8,7 +8,8 @@ module.exports = {
     upDateProduct,
     upDateProductImages,
     insertProduct,
-    insertProductImage
+    insertProductImage,
+    filterProductsByQueryParams
 }
 
 
@@ -67,4 +68,18 @@ function insertProductImage(data){
     return db('product_images')
     .insert(data, "product_images.product_id")
     .then(([id]) => { return getProductAndImagesByID(id)})
+}
+
+function filterProductsByQueryParams(qry){
+    const keys = Object.keys(qry)
+    if(keys.length == 1){
+        return db('products')
+        .where(qry)
+        .orderBy('products.product_id')
+    } else {
+        return db('products')
+        .where(keys[0], qry[keys[0]])
+        .andWhere(keys[1], qry[keys[1]])
+        .orderBy('products.product_id')
+    }
 }
