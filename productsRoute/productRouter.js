@@ -21,9 +21,11 @@ router.get('/', async (req, res) => {
         if(Object.keys(qry).length > 0) {
             console.log('hello')
             const filteredProducts =  await products.filterProductsByQueryParams(qry)
+            const qryModified = []
+            filteredProducts.map(product => {return qryModified.push({product_id: product.product_id, product_name: product.name, price: product.price, type: product.type , gender: product.gender, brand: product.brand, desc: product.description, images: [{image_one: product.img_source_1}, {image_two: product.image_source_2}, {image_three: product.image_source_3}]})})
            
           
-          res.status(200).json(filteredProducts)
+          res.status(200).json(qryModified)
         }
           else {res.status(200).json(modifiedProducts)}
     }
