@@ -48,7 +48,7 @@ function upDateProductImages(id, changes){
     return db('product_images')
     .update(changes)
     .where('product_images.product_id', id)
-    .then(id => getProductByID(id))
+    .then(res => getProductAndImagesByID(id))
 }
 
 
