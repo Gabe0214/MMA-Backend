@@ -1,59 +1,67 @@
-
 exports.up = function(knex, Promise) {
-  return (
-    knex.schema
-        .createTable('products', tbl => {
-            tbl.increments('product_id');
+	return (
+		knex.schema
+			.createTable('products', (tbl) => {
+				tbl.increments('product_id');
 
-            tbl.string('name', 255)
-            .notNullable()
-            .unique()
+				tbl.string('name', 255).notNullable().unique();
 
-            tbl.decimal('price')
-            .notNullable()
+				tbl.decimal('price').notNullable();
 
-            tbl.string('type', 255)
-            .notNullable()
+				tbl.string('type', 255).notNullable();
 
-            tbl.string('gender', 6)
-            
-            tbl.string('description', 700)
-            .notNullable()
+				tbl.string('product_for', 10);
 
-            tbl.string('brand', 255)
-            .notNullable()
-        })
-        /* end of product table */
+				tbl.string('description', 700).notNullable();
 
-        // product images 
+				tbl.string('brand', 255).notNullable();
+				tbl.string('image', 255).notNullable();
+				tbl.string('image_2', 255);
+				tbl.string('image_3', 255);
+				tbl.string('color', 50).notNullable();
+			})
+			/* end of product table */
 
-       .createTable('product_images', tbl => {
-           tbl.increments('product_image_id')
-           tbl  
-            .integer('product_id')
-            .references('product_id')
-            .inTable('products')
-            .unsigned()
-            .notNullable()
-            .onUpdate('CASCADE')
-            .onDelete('CASCADE')
+			// Users
+			.createTable('users', (tbl) => {
+				tbl.increments('user_id');
 
-          tbl.string('img_source_1', 500)
-            .notNullable()
-            .unique()
+				tbl.string('firstname', 150).notNullable();
+				tbl.string('lastname', 150).notNullable();
+				tbl.string('username', 150).unique().notNullable();
+				tbl.string('email', 150).unique().notNullable();
+				tbl.string('password', 150).notNullable();
+				tbl.integer('zip', 4).notNullable();
+				tbl.string('city', 50).notNullable();
+				tbl.string('state', 100).notNullable();
+				tbl.string('adress', 100).notNullable();
+				tbl.string('adress_2', 100);
+			})
+			//Orders
 
-          tbl.string('image_source_2', 500)
-          .unique()
+			.createTable('orders', (tbl) => {
+				tbl.increments('order_id');
+				tbl.integer('order_user_id').references('user_id').inTable('users').unsigned().notNullable();
+				tbl.integer('total');
+			})
+			// OrderDetails
 
-          tbl.string('image_source_3',500)
-          .unique()
-       })
-    
-  )
+			.createTable('order_details', (tbl) => {
+				tbl.increments('order_details_id');
+				tbl.integer('order_details_order_id').references('order_id').inTable('orders').unsigned().notNullable();
+				tbl.integer('order_details_product_id').references('product_id').inTable('products').unsigned().notNullable();
+
+				tbl.integer('qty').notNullable();
+				tbl.string('size', 20).notNullable();
+				tbl.decimal('price').notNullable();
+			})
+	);
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema
-    .dropTableIfExists('product_images')
-    .dropTableIfExists('products')
+	return knex.schema
+		.dropTableIfExists('order_details')
+		.dropTableIfExists('orders')
+		.dropTableIfExists('users')
+		.dropTableIfExists('products');
 };
