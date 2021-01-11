@@ -5,9 +5,8 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
 	try {
-		const allProducts = await products.getAllProducts();
 		const { product_for, type } = req.query;
-		console.log({ product_for, type });
+		const allProducts = await products.getAllProducts({ product_for, type });
 		// if (Object.keys(qry).length > 0) {
 		// 	console.log('hello');
 		// 	const filteredProducts = await products.filterProductsByQueryParams(qry);

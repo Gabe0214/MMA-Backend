@@ -12,8 +12,16 @@ module.exports = {
 	filterProductsByQueryParams
 };
 
-function getAllProducts() {
-	return db('products as p').select('*').orderBy('p.product_id');
+function getAllProducts(qry) {
+	const knexQuery = db('products');
+	if (qry.product_for) {
+		knexQuery.where('product_for', `${qry.product_for}`);
+	}
+
+	if (qry.type) {
+		knexQuery.where('type', `${qry.type}`);
+	}
+	return knexQuery.orderBy('product_id');
 }
 
 function getProductAndImagesByID(id) {
