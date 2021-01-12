@@ -52,23 +52,6 @@ router.put('/:id', async (req, res) => {
 	}
 });
 
-//Update product image
-router.put('/product-image/:id', async (req, res) => {
-	try {
-		const id = req.params.id;
-		const changes = req.body;
-		const upDatedProductImage = await products.upDateProductImages(id, changes);
-		if (id) {
-			res.status(200).json(upDatedProductImage);
-		} else {
-			res.status(404).json({ message: 'id does not exist :(' });
-		}
-	} catch (err) {
-		console.log(err);
-		res.status(500).json({ message: 'something went wrong in the server' });
-	}
-});
-
 // insert a product
 
 router.post('/', validateFields, async (req, res) => {
@@ -83,15 +66,5 @@ router.post('/', validateFields, async (req, res) => {
 });
 
 // post product images
-
-router.post('/product-image', async (req, res) => {
-	try {
-		const insertedData = await products.insertProductImage(req.body);
-		res.status(200).json(insertedData);
-	} catch (err) {
-		console.log(err);
-		res.status(500).json({ message: 'something went wrong in server' });
-	}
-});
 
 module.exports = router;
