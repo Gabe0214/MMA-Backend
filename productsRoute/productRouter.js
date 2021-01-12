@@ -1,6 +1,6 @@
 const express = require('express');
 const products = require('./productsModel');
-
+const { validateFields, validateProductId } = require('../middleware/productsMiddleware');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 	}
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', validateProductId, async (req, res) => {
 	const productId = req.params.id;
 
 	try {
@@ -28,7 +28,7 @@ router.get('/:id', async (req, res) => {
 
 // DELETE product
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', validateProductId, async (req, res) => {
 	try {
 		const deleteProduct = await products.deleteProduct(req.params.id);
 		res.status(200).json({ message: 'Product deleted' });
@@ -71,7 +71,7 @@ router.put('/product-image/:id', async (req, res) => {
 
 // insert a product
 
-router.post('/', async (req, res) => {
+router.post('/', validateFields, async (req, res) => {
 	try {
 		const data = req.body;
 		const product = await products.insertProduct(data);
