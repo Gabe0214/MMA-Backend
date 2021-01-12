@@ -1,3 +1,5 @@
+const products = require('../productsRoute/productsModel');
+
 function validateFields(req, res, next) {
 	const { name, price, type, product_for, description, brand, image, color } = req.body;
 
@@ -37,6 +39,18 @@ function validateFields(req, res, next) {
 	return;
 }
 
+async function validateProductId(req, res, next) {
+	const { id } = req.params;
+	const product = await products.getProductByID(id);
+	console.log(product);
+	if (product) {
+		next();
+	} else {
+		res.status(404).json({ message: 'id does not exist' });
+	}
+}
+
 module.exports = {
-	validateFields
+	validateFields,
+	validateProductId
 };
