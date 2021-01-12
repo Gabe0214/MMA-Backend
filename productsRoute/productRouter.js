@@ -40,7 +40,7 @@ router.delete('/:id', validateProductId, async (req, res) => {
 
 // Update a product
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', validateProductId, async (req, res) => {
 	try {
 		const id = req.params.id;
 		const data = req.body;
