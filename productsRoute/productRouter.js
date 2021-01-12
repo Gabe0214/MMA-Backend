@@ -43,7 +43,8 @@ router.delete('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
 	try {
 		const id = req.params.id;
-		const upDatedProduct = await products.upDateProduct(id, req.body);
+		const data = req.body;
+		const upDatedProduct = await products.updateProductByID(id, data);
 		res.status(200).json(upDatedProduct);
 	} catch (err) {
 		console.log(err);
