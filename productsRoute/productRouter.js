@@ -1,6 +1,6 @@
 const express = require('express');
 const products = require('./productsModel');
-
+const { validateFields, validateProductId } = require('../middleware/productsMiddleware');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 	}
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', validateProductId, async (req, res) => {
 	const productId = req.params.id;
 
 	try {
@@ -28,7 +28,7 @@ router.get('/:id', async (req, res) => {
 
 // DELETE product
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', validateProductId, async (req, res) => {
 	try {
 		const deleteProduct = await products.deleteProduct(req.params.id);
 		res.status(200).json({ message: 'Product deleted' });
@@ -40,7 +40,7 @@ router.delete('/:id', async (req, res) => {
 
 // Update a product
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', validateProductId, async (req, res) => {
 	try {
 		const id = req.params.id;
 		const data = req.body;
@@ -52,26 +52,9 @@ router.put('/:id', async (req, res) => {
 	}
 });
 
-//Update product image
-router.put('/product-image/:id', async (req, res) => {
-	try {
-		const id = req.params.id;
-		const changes = req.body;
-		const upDatedProductImage = await products.upDateProductImages(id, changes);
-		if (id) {
-			res.status(200).json(upDatedProductImage);
-		} else {
-			res.status(404).json({ message: 'id does not exist :(' });
-		}
-	} catch (err) {
-		console.log(err);
-		res.status(500).json({ message: 'something went wrong in the server' });
-	}
-});
-
 // insert a product
 
-router.post('/', async (req, res) => {
+router.post('/', validateFields, async (req, res) => {
 	try {
 		const data = req.body;
 		const product = await products.insertProduct(data);
@@ -83,15 +66,5 @@ router.post('/', async (req, res) => {
 });
 
 // post product images
-
-router.post('/product-image', async (req, res) => {
-	try {
-		const insertedData = await products.insertProductImage(req.body);
-		res.status(200).json(insertedData);
-	} catch (err) {
-		console.log(err);
-		res.status(500).json({ message: 'something went wrong in server' });
-	}
-});
 
 module.exports = router;
