@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const users = require('../usersRoute/usersModel');
-
+const { verifyUser } = require('../middleware/registrationMiddleware');
 const router = express.Router();
 
 router.post('/signup', async (req, res) => {
@@ -22,20 +22,14 @@ router.post('/signup', async (req, res) => {
 	}
 });
 
-router.post('/login', async (req, res) => {
-	const { email, password } = req.body;
-
-	try {
-		const user = await users.findUserbyEmail(email);
-		if (user && bcrypt.compareSync(password, user.password)) {
-			const token = singIn(user);
-			res.status(201).json({ token });
-		} else {
-			res.status(401).json({ message: 'Invalid email and/or password' });
-		}
-	} catch (err) {
-		console.log(err);
-		res.status(500).json({ message: 'Something went wrong with the server' });
+router.post('/login', verifyUser, (req, res) => {
+	const { password } = req.body;
+	const { user } = req;
+	if (user && bcrypt.compareSync(password, user.password)) {
+		const token = singIn(user);
+		res.status(201).json({ token });
+	} else {
+		res.status(401).json({ message: 'Invalid email and/or password' });
 	}
 });
 
