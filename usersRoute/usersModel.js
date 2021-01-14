@@ -4,7 +4,8 @@ module.exports = {
 	getAllUsers,
 	insertUser,
 	getUserByID,
-	deleteUserById
+	deleteUserById,
+	findUserbyEmail
 };
 
 function getAllUsers() {
@@ -23,4 +24,8 @@ function getUserByID(id) {
 
 function deleteUserById(id) {
 	return db('users as u').where('u.user_id', id).del();
+}
+
+function findUserbyEmail(email) {
+	return db('users as u').select('*').where('u.email', email).first();
 }

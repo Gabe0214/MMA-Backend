@@ -22,6 +22,23 @@ router.post('/signup', async (req, res) => {
 	}
 });
 
+router.post('/login', async (req, res) => {
+	const { email, password } = req.body;
+
+	try {
+		const user = await users.findUserbyEmail(email);
+		if (user && bcrypt.compareSync(password, user.password)) {
+			const token = singIn(user);
+			res.status(201).json({ token });
+		} else {
+			res.status(401).json({ message: 'Invalid email and/or password' });
+		}
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({ message: 'Something went wrong with the server' });
+	}
+});
+
 function singIn(user) {
 	const { firstname, lastname, email, zip, city, state } = user;
 	const payload = {
@@ -33,11 +50,11 @@ function singIn(user) {
 		state
 	};
 
-	const option = {
-		expires: '1d'
+	const options = {
+		expiresIn: '1d'
 	};
 
-	return jwt.sign(payload, process.env.JWT_SECRET, option);
+	return jwt.sign(payload, process.env.JWT_SECRET, options);
 }
 
 module.exports = router;
