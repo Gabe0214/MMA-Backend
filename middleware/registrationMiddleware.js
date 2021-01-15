@@ -1,3 +1,4 @@
+const { compareSync } = require('bcryptjs');
 const users = require('../usersRoute/usersModel');
 
 async function verifyUser(req, res, next) {
@@ -12,6 +13,22 @@ async function verifyUser(req, res, next) {
 	}
 }
 
+function verifyUserFields(req, res, next) {
+	const { firstname, lastname, username, email, password, zip, city, state, adress } = req.body;
+
+	if (!firstname || !lastname || !username || !email || !password || !zip || !city || !state || !adress) {
+		res.status(401).json({ message: 'credentials are missing' });
+	} else if (
+		(firstname == '' || lastname == ' ' || username == '' || email == '' || password == '' || zip == ' ',
+		city == ' ' || state == '' || adress == '')
+	) {
+		res.status(401).json({ message: 'fields cannot be empty' });
+	} else {
+		next();
+	}
+}
+
 module.exports = {
-	verifyUser
+	verifyUser,
+	verifyUserFields
 };
