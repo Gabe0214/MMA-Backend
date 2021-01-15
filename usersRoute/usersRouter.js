@@ -3,6 +3,7 @@ const express = require('express');
 const users = require('./usersModel');
 const router = express.Router();
 const { verifyUserByID, verifyBody } = require('../middleware/usersMiddleware');
+const { checkToken } = require('../middleware/restrictedMiddleware');
 router.get('/', async (req, res) => {
 	try {
 		const allUsers = await users.getAllUsers();
@@ -13,7 +14,7 @@ router.get('/', async (req, res) => {
 	}
 });
 
-router.put('/user/:id', verifyUserByID, verifyBody, async (req, res) => {
+router.put('/user/:id', checkToken, verifyUserByID, verifyBody, async (req, res) => {
 	try {
 		const changedUser = await users.editUser(req.user_id, req.body);
 		res.status(201).json(changedUser);
