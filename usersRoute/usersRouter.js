@@ -1,24 +1,22 @@
-const { json } = require('body-parser');
 const express = require('express');
 
 const users = require('./usersModel');
 const router = express.Router();
-
+const { verifyUserByID, verifyBody } = require('../middleware/usersMiddleware');
+const { checkToken } = require('../middleware/restrictedMiddleware');
 router.get('/', async (req, res) => {
 	try {
 		const allUsers = await users.getAllUsers();
 		res.status(200).json(allUsers);
 	} catch (err) {
 		console.log(err);
-		res.status(500), json({ message: 'something went wrong with the server' });
+		res.status(500).json({ message: 'something went wrong with the server' });
 	}
 });
 
-router.put('/user/:id', async (req, res) => {
-	const { id } = req.params;
-	const changes = req.body;
+router.put('/user/:id', checkToken, verifyUserByID, verifyBody, async (req, res) => {
 	try {
-		const changedUser = await users.editUser(id, changes);
+		const changedUser = await users.editUser(req.user_id, req.body);
 		res.status(201).json(changedUser);
 	} catch (err) {
 		console.log(err);
