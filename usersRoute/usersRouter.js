@@ -14,6 +14,18 @@ router.get('/', async (req, res) => {
 	}
 });
 
+router.put('/user/:id', async (req, res) => {
+	const { id } = req.params;
+	const changes = req.body;
+	try {
+		const changedUser = await users.editUser(id, changes);
+		res.status(201).json(changedUser);
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({ message: 'something went wrong with the server' });
+	}
+});
+
 router.delete('/user/:id', async (req, res) => {
 	const { id } = req.params;
 

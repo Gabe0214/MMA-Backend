@@ -5,7 +5,8 @@ module.exports = {
 	insertUser,
 	getUserByID,
 	deleteUserById,
-	findUserbyEmail
+	findUserbyEmail,
+	editUser
 };
 
 function getAllUsers() {
@@ -28,4 +29,8 @@ function deleteUserById(id) {
 
 function findUserbyEmail(email) {
 	return db('users as u').select('*').where('u.email', email).first();
+}
+
+function editUser(id, changes) {
+	return db('users as u').where('u.user_id', id).update(changes);
 }
