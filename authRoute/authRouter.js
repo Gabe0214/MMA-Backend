@@ -14,7 +14,6 @@ router.post('/signup', verifyUserFields, async (req, res) => {
 
 	try {
 		const newUser = await users.insertUser(user);
-		// const token = singIn(newUser)
 		res.status(201).json(newUser);
 	} catch (err) {
 		console.log(err);
