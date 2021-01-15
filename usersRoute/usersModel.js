@@ -31,6 +31,7 @@ function findUserbyEmail(email) {
 	return db('users as u').select('*').where('u.email', email).first();
 }
 
-function editUser(id, changes) {
-	return db('users as u').where('u.user_id', id).update(changes);
+async function editUser(id, changes) {
+	await db('users as u').where('u.user_id', id).update(changes);
+	return await getUserByID(id);
 }
