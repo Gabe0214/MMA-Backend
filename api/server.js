@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const productsRoute = require('../productsRoute/productRouter');
 const usersRoute = require('../usersRoute/usersRouter');
 const authRoute = require('../authRoute/authRouter');
+const ordersRoute = require('../ordersRoute/ordersRouter');
 const server = express();
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
@@ -21,5 +22,6 @@ server.get('/', (req, res) => {
 server.use('/products', productsRoute);
 server.use('/users', usersRoute);
 server.use('/auth', authRoute);
+server.use('/orders', ordersRoute);
 
 module.exports = server;
