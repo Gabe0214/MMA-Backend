@@ -1,6 +1,6 @@
 # MMA-Backend
 
-base url: https://heroku-mma-backend.com
+base url: not deployed yet
 
 This is a rest API created with NodeJS/Express, and PostgreSQL
 
@@ -154,5 +154,56 @@ User should receive the created product
 ```
 
 
+#### PUT PRODUCT 
 
+**URL** : `products/:id`
+
+**METHOD** : `PUT`
+
+**REQUIRED FIELD(S)** : User must send the id of the product, and at least one field to be edited. 
+
+
+```json
+    { "image_2": "https://image2url.com", }
+```
+
+### Sucess Response(201)
+
+**Content Example** 
+
+User should receive the edited product with the change(s) made.
+
+```json
+
+{
+    "product_id": 50,
+    "name": "Tatami Black Jiu Jitsu Gi -Black",
+    "prodct_for": "unisex",
+    "descrption": "Tatami's BJJ products are the best in the nation. World Champions are known to wear our brand.",
+    "brand": "Tatami",
+    "image": "https://imageurl.com",
+    "image_2": "https://image2url.com",
+    "image_3": null,
+    "color": "#00000"
+}
+
+```
+
+
+#### DELETE PRODUCT 
+
+**URL** : `products/:id`
+
+**METHOD** : `DELETE`
+
+**REQUIRED FIELD(S)** : User must pass the product id to remove product from the database
+
+
+**CONTENT EXAMPLE**
+
+User should receive a JSON message upon request. 
+
+```json 
+  { "message" : "product sucessfully deleted" }
+```
 
