@@ -4,7 +4,8 @@ module.exports = {
 	insertOrder,
 	getOrderByID,
 	insertOrderDetails,
-	getOrderDetailsById
+	getOrderDetailsById,
+	getAllOrderDetailsByUserId
 };
 
 async function insertOrder(data) {
@@ -32,4 +33,12 @@ function getOrderDetailsById(id) {
 		.from('products')
 		.where('order_details.order_details_id', id)
 		.from('order_details');
+}
+
+function getAllOrderDetailsByUserId(userId) {
+	return db('order_details')
+		.join('orders', 'orders.order_id', 'order_details.order_details_order_id')
+		.join('products', 'products.product_id', 'order_details.order_details_product_id')
+		.select('products.name', 'order_details.price', 'order_details.qty', 'order_details.size')
+		.where('orders.order_user_id', userId);
 }
