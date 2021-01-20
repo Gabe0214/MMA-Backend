@@ -4,6 +4,7 @@ const users = require('./usersModel');
 const router = express.Router();
 const { verifyUserByID, verifyBody } = require('../middleware/usersMiddleware');
 const { checkToken } = require('../middleware/restrictedMiddleware');
+
 router.get('/', async (req, res) => {
 	try {
 		const allUsers = await users.getAllUsers();
