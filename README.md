@@ -148,7 +148,7 @@ User should receive the created product
     "brand": "Tatami",
     "image": "https://imageurl.com",
     "image_2": null,
-    "image_3": null
+    "image_3": null,
     "color": "#00000"
 }
 ```
