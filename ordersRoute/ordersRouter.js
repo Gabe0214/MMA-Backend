@@ -33,4 +33,17 @@ router.post('/order/order_detail', async (req, res) => {
 	}
 });
 
+router.get('/:id', async (req, res) => {
+	const { id } = req.params;
+
+	try {
+		const allOrders = await orders.getAllOrderDetailsByUserId(id);
+
+		res.status(200).json(allOrders);
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({ message: 'something went wrong in the server' });
+	}
+});
+
 module.exports = router;
