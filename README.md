@@ -198,6 +198,7 @@ User should receive the edited product with the change(s) made.
 
 **REQUIRED FIELD(S)** : User must pass the product id to remove product from the database
 
+### SUCESS RESPONSE(201)
 
 **CONTENT EXAMPLE**
 
@@ -207,6 +208,80 @@ User should receive a JSON message upon request.
   { "message" : "product sucessfully deleted" }
 ```
 
+## AUTHENTICATION
+
+#### REGISTER A USER 
+
+**URL** : `/auth/signup`
+
+**MEHTOD** : `POST`
+
+**REQUIRED FIELDS** : User must send an object with the following fields and their data types. 
+
+```json
+    {
+       "firstname": "string",
+       "lastname": "string",
+       "email" : "string",
+       "passoword": "string",
+       "zip": "number",
+       "city": "string",
+       "state": "string",
+       "adress": "string",
+       "adress_2": "string(optional)"
+    }
+```
+
+### SUCESS RESPONSE(201)
+
+**CONTENT EXAMPLE**
+
+User should receive the created user object with hashed passoword
+
+```json
+{
+        "user_id": 5,
+        "firstname": "Pedro",
+        "lastname": "Stevenson",
+        "username": "GoodMOrning0000",
+        "email": "Pedro@johnathon.com",
+        "password": "$2a$10$PTFCW8a8aZ9Tz75tQroyMusPgiJreffQeCW7Bd5EBVYMRwiTydSiG",
+        "zip": 1077,
+        "city": "Birmingham",
+        "state": "Alabama",
+        "adress": "1044 Bvld Ave ",
+        "adress_2": null
+}
+```
+
+#### LOGIN/TOKEN
+
+**URL** : `/auth/login`
+
+**METHOO** : `POST`
+
+**REQUIRED FIELDS** : User must send an object with the username and password fields
+
+```json
+{
+    "username": "John",
+    "password": "abc12345"
+}
+```
+
+### SUCESS RESPONSE(201)
+
+**CONENT EXAMPLE**
+
+User should receive a toke upon request
+
+```json
+{
+    "token": "token"
+}
+```
+
+
 ## USERS 
 
 #### GET ALL USERS 
@@ -214,6 +289,8 @@ User should receive a JSON message upon request.
 **URL** : `/users`
 
 **METHOD** : `GET`
+
+### SUCESS RESPONSE(200)
 
 **CONTENT EXAMPLE**
 
@@ -270,6 +347,8 @@ User should receive a list of all existing users
 
 **REQUIRED FIELD** : User must pass the user id to obtain user information.
 
+### SUCESS RESPONSE(200)
+
 **CONTENT EXAMPLE**
 
 User will receive the user data by passing the user id
@@ -296,11 +375,12 @@ User will receive the user data by passing the user id
 
 **METHOD** : `PUT`
 
-**REQUIRED FIELD** : User id must be passed through the query params, and at least one field to be edited.
+**REQUIRED FIELDS** : User id must be passed through the query params, and at least one field to be edited.
 
 ```json
 { "adress_2": "1044 Charleston Ave" }
 ```
+### Sucess Response (201)
 
 **CONTENT EXAMPLE** 
 
@@ -318,4 +398,84 @@ User will receive the user data by passing the user id
         "adress": "4444 Steve Drive Ave",
         "adress_2": "1044 Charleston Ave"
  }
+```
+
+#### DELTE USER 
+
+**URL** : `/users/user/:id`
+
+**METHOD** : `DELETE`
+
+**REQUIRED FIELD** : User must pass the user id to remove user.
+
+### SUCCESS RESPONSE(201)
+
+**CONTENT EXAMPLE**
+
+User will receive a JSON message upon request.
+
+```json 
+    { "message": "user sucessfully removed" }
+```
+
+## Orders
+
+#### PLACE AN ORDER
+
+**URL** `/orders/order`
+
+**MEHTOD** : `POST`
+
+**REQUIRED FIELDS**: User must send an object that contains the order_user_id(user_id), and total fields
+
+```json
+{
+    "order_user_id": 3,
+    "total": 40.00
+}
+```
+
+## SUCESS RESPONSE(201)  
+
+**CONTENT EXAMPLE** : user should receive an order_id and username field in JSON object.
+
+```json
+{
+    "order_id": 8,
+    "username" : "Georgey"
+}
+```
+
+#### RECORD ORDER DETAIL
+
+**URL** : `/orders/order/order_detail`
+
+**METHOD** : `POST`
+
+**REQUIRED FIELDS**: User must pass the following fields: order_details_order_id(order_id), order_details_product_id(product_id), qty, price, and size
+
+```json
+{
+    "order_details_order_id": 8,
+    "order_details_product_id": 6,
+    "price": 19.99
+    "size": "Large",
+    "qty": 1
+}
+```
+
+### SUCCESS RESPONSE(201)
+
+**CONTENT EXAMPLE** 
+
+User should receive the order_id, name of the product, price, qty, and size inside of a JSON object.
+
+```json
+{       
+        "order_id": 8,
+        "name": "WORLD CHAMPS TEE BLACK",
+        "price": "19.99",
+        "qty": 1,
+        "size": "Large"   
+}
 ```

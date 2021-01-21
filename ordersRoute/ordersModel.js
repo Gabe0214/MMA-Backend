@@ -17,12 +17,13 @@ function getOrderByID(id) {
 	return db('orders')
 		.select('orders.order_id', 'users.username')
 		.join('users', 'orders.order_user_id', 'users.user_id')
-		.where('orders.order_id', id);
+		.where('orders.order_id', id)
+		.first();
 }
 
 async function insertOrderDetails(data) {
 	const [ orderDetailsID ] = await db('order_details').insert(data, 'order_details.order_details_id');
-	return getOrderDetailsById(orderDetailsID);
+	return getOrderDetailsById(orderDetailsID).first();
 }
 
 function getOrderDetailsById(id) {
