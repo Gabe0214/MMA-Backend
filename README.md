@@ -207,3 +207,115 @@ User should receive a JSON message upon request.
   { "message" : "product sucessfully deleted" }
 ```
 
+## USERS 
+
+#### GET ALL USERS 
+
+**URL** : `/users`
+
+**METHOD** : `GET`
+
+**CONTENT EXAMPLE**
+
+User should receive a list of all existing users
+
+```json 
+[
+    {
+        "user_id": 3,
+        "firstname": "Geroge",
+        "lastname": "Stevenson",
+        "username": "Georgey",
+        "email": "George@johnathon.com",
+        "password": "$2a$10$ekis8iZItyQTyG4xJCcJP.x1V40ClHB9NT5VVOaK3qNTUcOHnoovy",
+        "zip": 1077,
+        "city": "Birmingham",
+        "state": "Alabama",
+        "adress": "4444 Steve Drive Ave",
+        "adress_2": null
+    },
+    {
+        "user_id": 4,
+        "firstname": "Yhomas",
+        "lastname": "Stevenson",
+        "username": "Yummi",
+        "email": "Yomase@johnathon.com",
+        "password": "$2a$10$xhggLueEbQcEHUPPjZaW5eOWv3kmObcKIdvfP6Of/RglXekRx4NHG",
+        "zip": 1077,
+        "city": "Birmingham",
+        "state": "Alabama",
+        "adress": "4444 Steve Drive Ave",
+        "adress_2": null
+    },
+    {
+        "user_id": 5,
+        "firstname": "Pedro",
+        "lastname": "Stevenson",
+        "username": "GoodMOrning0000",
+        "email": "Pedro@johnathon.com",
+        "password": "$2a$10$PTFCW8a8aZ9Tz75tQroyMusPgiJreffQeCW7Bd5EBVYMRwiTydSiG",
+        "zip": 1077,
+        "city": "Birmingham",
+        "state": "Alabama",
+        "adress": "1044 Bvld Ave ",
+        "adress_2": null
+    }
+]
+```
+#### GET USER BY ID
+
+**URL** : `/users/:id`
+
+**METHOD** : `GET`
+
+**REQUIRED FIELD** : User must pass the user id to obtain user information.
+
+**CONTENT EXAMPLE**
+
+User will receive the user data by passing the user id
+
+```json
+    {
+        "user_id": 3,
+        "firstname": "Geroge",
+        "lastname": "Stevenson",
+        "username": "Georgey",
+        "email": "George@johnathon.com",
+        "password": "$2a$10$ekis8iZItyQTyG4xJCcJP.x1V40ClHB9NT5VVOaK3qNTUcOHnoovy",
+        "zip": 1077,
+        "city": "Birmingham",
+        "state": "Alabama",
+        "adress": "4444 Steve Drive Ave",
+        "adress_2": null
+    }
+```
+
+#### PUT USER
+
+**URL** : `/users/user/:id`
+
+**METHOD** : `PUT`
+
+**REQUIRED FIELD** : User id must be passed through the query params, and at least one field to be edited.
+
+```json
+{ "adress_2": "1044 Charleston Ave" }
+```
+
+**CONTENT EXAMPLE** 
+
+```json 
+ {
+        "user_id": 3,
+        "firstname": "Geroge",
+        "lastname": "Stevenson",
+        "username": "Georgey",
+        "email": "George@johnathon.com",
+        "password": "$2a$10$ekis8iZItyQTyG4xJCcJP.x1V40ClHB9NT5VVOaK3qNTUcOHnoovy",
+        "zip": 1077,
+        "city": "Birmingham",
+        "state": "Alabama",
+        "adress": "4444 Steve Drive Ave",
+        "adress_2": "1044 Charleston Ave"
+ }
+```
