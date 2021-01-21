@@ -458,7 +458,7 @@ User will receive a JSON message upon request.
 {
     "order_details_order_id": 8,
     "order_details_product_id": 6,
-    "price": 19.99
+    "price": 19.99,
     "size": "Large",
     "qty": 1
 }
@@ -477,5 +477,39 @@ User should receive the order_id, name of the product, price, qty, and size insi
         "price": "19.99",
         "qty": 1,
         "size": "Large"   
+}
+```
+
+### GET ALL ORDERS FOR USER BY USER ID
+
+**URL**: `/orders/order/user/:id`
+
+**MEHTOD** : `GET`
+
+**REQUIRED FIELDS**: User id must be passed to obtain all orders from the user. 
+
+### SUCESS RESPONSE(200)
+
+**CONTENT EXAMPLE**
+
+User should receive a JSON object with an order field, which contains an array of all orders
+
+```json
+{
+    "orders": [
+        
+        {       
+            "name": "WORLD CHAMPS TEE BLACK",
+            "price": "19.99",
+            "qty": 1,
+            "size": "Large"   
+        },
+        {       
+            "name": "WORLD CHAMPS TEE BLACK",
+            "price": "19.99",
+            "qty": 1,
+            "size": "Medium"   
+        }
+    ]
 }
 ```
