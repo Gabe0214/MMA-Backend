@@ -37,7 +37,7 @@ module.exports = {
 			min: 2,
 			max: 10
 		},
-		ssl: 'require',
+		sslmode: process.env.NODE_ENV === 'production' ? 'require' : 'disable',
 		migrations: {
 			directory: './database/migrations'
 		},
