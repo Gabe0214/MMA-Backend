@@ -26,7 +26,20 @@ router.post('/login', verifyUser, (req, res) => {
 	const { user } = req;
 	if (user && bcrypt.compareSync(password, user.password)) {
 		const token = singIn(user);
-		res.status(201).json({ token });
+
+		const data = {
+			user_id: user.user_id,
+			username: user.username,
+			firstname: user.firstname,
+			lastname: user.lastname,
+			state: user.state,
+			city: user.city,
+			zip: user.zip,
+			adress: user.adress,
+			adress_2: user.adress_2
+		};
+
+		res.status(201).json({ user: data, token });
 	} else {
 		res.status(401).json({ message: 'Invalid email and/or password' });
 	}
