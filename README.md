@@ -1,6 +1,6 @@
 # MMA-Backend
 
-base url: not deployed yet
+base url: https://mma-server.herokuapp.com/
 
 This is a rest API created with NodeJS/Express, and PostgreSQL
 
