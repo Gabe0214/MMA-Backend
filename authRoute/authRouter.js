@@ -2,10 +2,10 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const users = require('../usersRoute/usersModel');
-const { verifyUser, verifyUserFields } = require('../middleware/registrationMiddleware');
+const { verifyUser, verifyUserFields, verifyUserRegistration } = require('../middleware/registrationMiddleware');
 const router = express.Router();
 
-router.post('/signup', verifyUserFields, async (req, res) => {
+router.post('/signup', verifyUserFields, verifyUserRegistration, async (req, res) => {
 	const user = req.body;
 
 	const hashPassword = bcrypt.hashSync(user.password, 10);
@@ -36,6 +36,7 @@ router.post('/login', verifyUser, (req, res) => {
 
 function singIn(user) {
 	const { firstname, lastname, email, zip, city, state } = user;
+
 	const payload = {
 		firstname,
 		lastname,

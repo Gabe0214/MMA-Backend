@@ -13,6 +13,20 @@ async function verifyUser(req, res, next) {
 	}
 }
 
+async function verifyUserRegistration(req, res, next) {
+	console.log('hello');
+	const { email, username } = req.body;
+
+	const userEmail = await users.findUserbyEmail(email);
+	const userUserName = await users.findUserByUsername(username);
+
+	if (userEmail || userUserName) {
+		res.status(401).json({ Message: 'Username or Email exists' });
+	} else {
+		next();
+	}
+}
+
 function verifyUserFields(req, res, next) {
 	const { firstname, lastname, username, email, password, zip, city, state, adress } = req.body;
 
@@ -30,5 +44,6 @@ function verifyUserFields(req, res, next) {
 
 module.exports = {
 	verifyUser,
-	verifyUserFields
+	verifyUserFields,
+	verifyUserRegistration
 };
