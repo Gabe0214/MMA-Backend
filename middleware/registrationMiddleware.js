@@ -21,7 +21,7 @@ async function verifyUserRegistration(req, res, next) {
 	const userUserName = await users.findUserByUsername(username);
 
 	if (userEmail || userUserName) {
-		res.status(401).json({ Message: 'Username or Email exists' });
+		res.status(400).json({ Message: 'Username or Email exists' });
 	} else {
 		next();
 	}
